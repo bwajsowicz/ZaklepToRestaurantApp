@@ -1,0 +1,42 @@
+.mat-elevation-z4 {
+    z-index: 2;
+ }
+
+ .example-card {
+    margin: 1%;
+  }
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+  height: 64px;
+  width: 64px;
+}
+
+spacer {
+   flex: 1 1 auto;
+}
+
+.mat-body-2 {
+  font: 300 14px/24px Roboto,"Helvetica Neue",sans-serif;
+}
+
+.header-title {
+  color:white; 
+  padding: 10px; 
+  text-transform: uppercase;
+}
+
+.sidenav {
+  padding: 0px; 
+  font: 500 14px/24px Roboto,"Helvetica Neue",sans-serif";
+}
+
+.sidenav-header {
+  padding: 0px; 
+  font: 500 14px/24px Roboto,"Helvetica Neue",sans-serif"
+}
+
+.sidenav-list-item-icon {
+  margin-right: 64px;
+}

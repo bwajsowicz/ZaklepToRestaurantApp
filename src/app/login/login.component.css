@@ -1,0 +1,8 @@
+.full-width-input {
+    width: 100%;
+}
+mat-card {
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}
