@@ -16,8 +16,11 @@ import { LoginComponent } from './login/login.component';
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'
+import { AuthGuard } from './services/auth-guard';
 
 @NgModule({
   declarations: [
@@ -26,17 +29,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoginComponent
   ],
   imports: [
+    HttpClientModule,
     FormsModule, ReactiveFormsModule,
     RouterModule.forRoot([
       {path: 'login', component: LoginComponent},
-      {path: 'dashboard', component: DashboardComponent},   
+      {path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent},   
       {path: '', redirectTo: 'login', pathMatch: 'full'}
     ]),
     [BrowserAnimationsModule],
-    [MatListModule, MatIconModule, MatSidenavModule, MatCardModule, MatInputModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatFormFieldModule],
+    [MatProgressSpinnerModule, MatListModule, MatIconModule, MatSidenavModule, MatCardModule, MatInputModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatFormFieldModule],
     BrowserModule,
   ],
-  providers: [{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

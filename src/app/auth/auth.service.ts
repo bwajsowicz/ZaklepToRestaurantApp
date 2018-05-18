@@ -1,17 +1,19 @@
 import { Injectable } from "@angular/core";
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
-    constructor(private helperService: JwtHelperService) { }
+    constructor(private http: HttpClient) { }
 
-    public GetToken(): string {
-        return localStorage.getItem('access_token');
+    login(login: string, password: string) {
+        return this.http.post("http://zakleptoapi.azurewebsites.net/api/employee/login", {login: login, password: password})
+        .pipe(map(user => {
+            localStorage.setItem('token', JSON.stringify(user));
+        }));
     }
 
-    public isAuthenticated(): boolean {
-        const token = this.GetToken();
-
-        return this.helperService.isTokenExpired(token); 
+    logout() {
+        localStorage.removeItem('token');
     }
 }
