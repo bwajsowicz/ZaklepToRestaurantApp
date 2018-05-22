@@ -1,0 +1,22 @@
+.account-info-card {
+    min-width: 150px;
+    max-width: 500px;
+    text-align: center;
+    margin: 16px auto;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.action-button {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.test {
+    font: 300 36px/48px Roboto,"Helvetica Neue",sans-serif;
+    margin: 16px;
+    text-align: center;
+}
+  
