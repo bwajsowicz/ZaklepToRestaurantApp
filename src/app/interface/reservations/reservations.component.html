@@ -1,0 +1,28 @@
+<div class="d-flex flex-wrap justify-content-center align-items-center">
+    <h1 class="mat-display-1 test" style="margin-bottom: 30px;">Rezerwacje dnia:</h1>
+    <mat-form-field style="margin: 16px">
+      <input matInput [matDatepicker]="picker" [value]="actualDate" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi="true" #picker></mat-datepicker>      
+    </mat-form-field>
+  </div>
+  <div class="d-flex flex-wrap justify-content-center">
+    <h1 class="mat-display-1" *ngIf="isEmpty">brak rezerwacji na podanę datę</h1>
+    <mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
+    <mat-card class="card" *ngFor="let reservation of reservations">
+      <mat-card-header>
+        <mat-card-title>Rezerwacja</mat-card-title>
+        <mat-card-subtitle>{{reservation.dateStart | date: 'short'}}</mat-card-subtitle>
+        <mat-card-subtitle>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="accent">Edytuj</button>
+        <button mat-raised-button color="disabled">Anuluj</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <br/>
+  <mat-divider></mat-divider>
+  <br/>
