@@ -16,21 +16,25 @@ export class LoginComponent implements OnInit{
   constructor(private fb: FormBuilder, private router: Router, private _employeeService: EmployeeService, 
   private _authService: AuthService) { }
   employee: Employee;
+  loading: boolean;
 
   ngOnInit() {
+    this.loading = false;
     this._authService.logout();  
   }
 
   login() {
+    this.loading = true;
     this._authService.login(this.model.login, this.model.password)
       .subscribe(
                 data => {
                     console.log("DATA");
                     localStorage.setItem("login", this.model.login);
-                    this.router.navigate(["dashboard"], { replaceUrl: true });
+                    this.router.navigate(["interface"], { replaceUrl: true });
                     console.log(localStorage.getItem("currentUser"));
                 },
                 error => {
+                    this.loading = false;
                     console.log("ERROR");
                 });
   }

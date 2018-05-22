@@ -15,6 +15,7 @@
           <input matInput type="password" placeholder="Hasło:" name="password" [(ngModel)]="model.password" required>         
           <!-- TODO: input validation --> 
         </mat-form-field>
+        <mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
         <button mat-raised-button color="primary" type="submit">Zaloguj</button>       
       </form>
       <button mat-button color="primary" type="submit" style="margin-top: 1.25em">Zapomniałeś swojego loginu bądź hasła?</button>        

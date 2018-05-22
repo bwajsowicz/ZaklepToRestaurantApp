@@ -7,3 +7,8 @@ mat-card {
   margin: 2em auto;
   text-align: center;
 }
+
+.loading-spinner {
+  margin: auto;
+  margin-bottom: 16px;
+}
