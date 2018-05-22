@@ -1,5 +1,5 @@
 <div class="d-flex flex-wrap justify-content-center align-items-center">
-    <h1 class="mat-display-1 test" style="margin-bottom: 30px;">Rezerwacje dnia:</h1>
+    <h1 class="mat-display-1 header-title" style="margin-bottom: 30px;">Rezerwacje dnia:</h1>
     <mat-form-field style="margin: 16px">
       <input matInput [matDatepicker]="picker" [value]="actualDate" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

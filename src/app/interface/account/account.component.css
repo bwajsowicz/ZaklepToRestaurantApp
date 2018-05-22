@@ -1,4 +1,4 @@
-.account-info-card {
+.card {
     min-width: 150px;
     max-width: 500px;
     text-align: center;
@@ -14,7 +14,7 @@
     margin-right: 4px;
 }
 
-.test {
+.header-title {
     font: 300 36px/48px Roboto,"Helvetica Neue",sans-serif;
     margin: 16px;
     text-align: center;
