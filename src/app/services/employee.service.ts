@@ -7,10 +7,10 @@ export class EmployeeService {
     constructor(private http: HttpClient) { }
  
     getAllEmployees() {
-        return this.http.get<Employee[]>('http://zakleptoapi.azurewebsites.net/api/employee');
+        return this.http.get<Employee[]>('http://localhost:53993/api/employee');
     }
  
     getSingleEmployee(login: string) {
-        return this.http.get<Employee>('http://zakleptoapi.azurewebsites.net/api/employee/' + login);
+        return this.http.get<Employee>('http://localhost:53993/api/employee/' + login);
     }
 }
