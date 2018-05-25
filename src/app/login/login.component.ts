@@ -4,17 +4,18 @@ import { Router } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee';
 import { AuthService } from '../auth/auth.service';
+import { DataHandlerService } from '../services/data-handler.service';
 
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [EmployeeService, AuthService]
+  providers: [AuthService]
 })
 
 export class LoginComponent implements OnInit{
   model: any = {};
-  constructor(private fb: FormBuilder, private router: Router, private _employeeService: EmployeeService, 
-  private _authService: AuthService) { }
+  constructor(private fb: FormBuilder, private router: Router, 
+  private _authService: AuthService, private _dataHandler: DataHandlerService) { }
   employee: Employee;
   loading: boolean;
 
@@ -30,8 +31,8 @@ export class LoginComponent implements OnInit{
                 data => {
                     console.log("DATA");
                     localStorage.setItem("login", this.model.login);
+                    this._dataHandler.setEmployee(this.model.login);
                     this.router.navigate(["interface"], { replaceUrl: true });
-                    console.log(localStorage.getItem("currentUser"));
                 },
                 error => {
                     this.loading = false;

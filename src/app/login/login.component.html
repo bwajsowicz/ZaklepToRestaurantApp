@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z4" style="background-color: #f44336;">
+<mat-toolbar class="mat-elevation-z4" color="primary">
   <h1 class="mat-display-1" style="color:white; padding: 10px; text-transform: uppercase;">Zaklep.To</h1>
 </mat-toolbar>
 
@@ -15,10 +15,17 @@
           <input matInput type="password" placeholder="Hasło:" name="password" [(ngModel)]="model.password" required>         
           <!-- TODO: input validation --> 
         </mat-form-field>
-        <mat-spinner class="loading-spinner" *ngIf="loading"></mat-spinner>
-        <button mat-raised-button color="primary" type="submit">Zaloguj</button>       
+        <button mat-raised-button color="accent" type="submit">Zaloguj</button>  
+        <mat-progress-bar
+          *ngIf="loading"
+          class="progress-bar"
+          color="primary"
+          mode="indeterminate"
+          value="50"
+          bufferValue="75">
+        </mat-progress-bar>     
       </form>
-      <button mat-button color="primary" type="submit" style="margin-top: 1.25em">Zapomniałeś swojego loginu bądź hasła?</button>        
+      <button mat-button color="primary" type="submit" style="margin-top: 16px">Zapomniałeś swojego loginu bądź hasła?</button>        
     </mat-card-content>
   </mat-card>
 </div> 
