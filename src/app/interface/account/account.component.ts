@@ -2,27 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/employee';
+import { DataHandlerService } from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  styleUrls: ['./account.component.css'],
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit {
   isConfirmButtonDisabled: boolean = true;;
   isEditButtonDisabled: boolean = false;
   isInputDisabled: boolean = true;
   employee: Employee;
 
-  constructor(private _employeeService: EmployeeService) { 
-    this.employee = new Employee();
-    _employeeService.getSingleEmployee(localStorage.getItem("login")).subscribe(x => 
-      {
-        this.employee = x;
-      }
-    );
+  constructor(private _dataHandler: DataHandlerService) { 
   }
 
+  ngOnInit() {
+    this._dataHandler.cast.subscribe(x => this.employee = x);
+  }
   onEdit() {
     this.isInputDisabled = false;
     this.isConfirmButtonDisabled = false;

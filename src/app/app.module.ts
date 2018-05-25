@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
-import { DashboardComponent } from './interface/dashboard/dashboard.component';
+import { DashboardComponent, ConfirmDialog } from './interface/dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatIconModule } from '@angular/material/icon'
@@ -28,6 +28,10 @@ import { AuthGuard } from './services/auth-guard';
 import { ReservationsComponent } from './interface/reservations/reservations.component';
 import { InterfaceComponent } from './interface/interface.component';
 import { AccountComponent } from './interface/account/account.component';
+import { DataHandlerService } from 'src/app/services/data-handler.service';
+import { EmployeeService } from './services/employee.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -36,8 +40,10 @@ import { AccountComponent } from './interface/account/account.component';
     LoginComponent,
     ReservationsComponent,
     InterfaceComponent,
-    AccountComponent
+    AccountComponent,
+    ConfirmDialog
   ],
+  entryComponents: [ConfirmDialog],
   imports: [
     HttpClientModule,
     FormsModule, ReactiveFormsModule,
@@ -64,10 +70,10 @@ import { AccountComponent } from './interface/account/account.component';
       {path: '', redirectTo: 'login', pathMatch: 'full'}
     ]),
     [BrowserAnimationsModule],
-    [MatNativeDateModule, MatProgressSpinnerModule, MatListModule, MatIconModule, MatSidenavModule, MatCardModule, MatInputModule, MatButtonModule, MatBadgeModule, MatToolbarModule, MatFormFieldModule, MatDatepickerModule],
+    [ MatProgressBarModule, MatNativeDateModule, MatProgressSpinnerModule, MatListModule, MatIconModule, MatSidenavModule, MatCardModule, MatInputModule, MatButtonModule, MatBadgeModule, MatToolbarModule, MatFormFieldModule, MatDatepickerModule],
     BrowserModule,
   ],
-  providers: [AuthGuard],
+  providers: [DataHandlerService, AuthGuard, EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

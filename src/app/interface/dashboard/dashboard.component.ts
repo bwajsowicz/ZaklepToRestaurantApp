@@ -1,4 +1,4 @@
-import { Component, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, OnChanges, AfterViewInit, Inject } from '@angular/core';
 import { Employee } from '../../models/employee';
 import { OnInit } from '@angular/core';
 import { AfterContentChecked } from '@angular/core';
@@ -9,15 +9,21 @@ import { Router } from '@angular/router';
 import { Reservation } from '../../models/reservation';
 import { ReservationService } from '../../services/reservation.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { interval } from 'rxjs';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+
 
 @Component({
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   providers: [EmployeeService, AuthService, ReservationService]
 })
-export class DashboardComponent{
+export class DashboardComponent implements OnInit {
   employee: Employee;
   reservations: Reservation[];
+  filteredReservations: Reservation[];
+
+  numberOfReservations: number;
 
   restaurantId: string;
   actualDate: Date;
@@ -25,30 +31,67 @@ export class DashboardComponent{
   isLoading: boolean = true;
   isEmpty: boolean = false;
 
-  constructor(private _reservationService: ReservationService, private _employeeService : EmployeeService, private _authService: AuthService, private _router: Router) {
+  _filter: string;
+  
+  get filter(): string {
+    return this._filter;
+  }
+
+  set filter(value: string){
+    this._filter = value;
+    this.filteredReservations = this.filter ? this.PerformFilter(this.filter) : this.reservations;
+  }
+
+  PerformFilter(value: string): Reservation[] {
+    value = value.toLocaleLowerCase();
+    return this.reservations.filter(x => (x.customer.firstName.toLocaleLowerCase() + "" + x.customer.lastName.toLocaleLowerCase()).indexOf(value) !== -1);
+  }
+
+  constructor(public dialog: MatDialog, private _reservationService: ReservationService, private _employeeService : EmployeeService, private _authService: AuthService, private _router: Router) {
+    this.filter = '';
     this.actualDate = new Date();
-    this.employee = new Employee();
-    _employeeService.getSingleEmployee(localStorage.getItem("login"))
+    this.employee = new Employee(); 
+  }
+
+  ngOnInit() {
+    this._employeeService.getSingleEmployee(localStorage.getItem("login"))
       .subscribe(x => {
                       this.employee = x;
                       this.restaurantId = this.employee.restaurant.id;
                       console.log(this.restaurantId);
                       this.updateReservations();
-      }); 
+      });
   }
 
   updateReservations() {
     this.isEmpty = false;
-
-    this._reservationService.getAllReservationsForSpecificRestaurantAndDate(this.restaurantId, this.actualDate.toJSON())
+    this._reservationService.getAllUnconfirmedReservationsForSpecificRestaurant(this.restaurantId)
       .subscribe(reservations => {
-        this.reservations = reservations.filter(x => x.restaurant.id === this.restaurantId);
+        this.reservations = reservations;
+
+        if(this.filter == "") {
+          this.filteredReservations = this.reservations;
+        }
+
+        if(this.filteredReservations.length == 0) {
+          this.isEmpty = true;
+        }
+        else {
+          this.isEmpty = false;
+        }
+
+        var numOfReservationsBuffer = this.numberOfReservations
+        this.numberOfReservations = reservations.length;
+
+        if(numOfReservationsBuffer != this.numberOfReservations)
+        {
+          console.log("NIE ZGADZAJĄ SIĘ");
+        }
         
         for(let reservation of reservations) 
         {
           let dateString = reservation.dateStart.toString();
           reservation.dateStart = new Date(dateString);
-          console.log(reservation.dateStart.toJSON());
         }
 
         if(this.reservations.length == 0)
@@ -56,5 +99,52 @@ export class DashboardComponent{
 
         this.isLoading = false;
       });
+  }
+
+  onConfirm(id: string) {
+    //TODO: 'are you sure?' dialog
+    this._reservationService.confirmReservation(id).subscribe(result => console.log(result));
+  }
+
+  onEdit() {
+    //TODO: implement dialog-box for this method
+  }
+
+  openDialog(reservationId: string): void {
+
+
+    let dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '250px',
+      data: {id: reservationId}
+    });
+ 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Reservation has been deleted');
+    });
+  }
+}
+
+// --dialogs--
+
+// confirm
+@Component({
+  selector: 'confirm-dialog',
+  templateUrl: 'confirm-dialog.html',
+  providers: [ReservationService]
+})
+export class ConfirmDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private _reservationService: ReservationService) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onYesClick(): void {
+    console.log(this.data.id);
+    this._reservationService.deleteReservation(this.data.id).subscribe(result => console.log(result));
+    this.dialogRef.close();
   }
 }

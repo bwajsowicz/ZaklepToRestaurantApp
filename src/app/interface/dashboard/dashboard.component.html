@@ -1,21 +1,26 @@
-<div class="d-flex flex-wrap justify-content-center align-items-center">
-    <h1 class="mat-display-1 header-title">Nowe niepotwierdzone</h1>
-  </div>
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <h1 class="mat-display-1 header-title">Nowe niepotwierdzone</h1>
+  Filtruj po imieniu i nazwisku
+  <mat-form-field>
+     <input style="text-align: center;" matInput value="example" [(ngModel)]="filter">
+  </mat-form-field>
+</div>
   <div class="d-flex flex-wrap justify-content-center">
     <mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
-    <h1 class="mat-display-1" *ngIf="isEmpty">brak nowych rezerwacji</h1>
-    <mat-card class="card" *ngFor="let reservation of reservations">
+    <h1 class="mat-display-1 notification" *ngIf="isEmpty">brak nowych rezerwacji</h1>
+    <mat-card class="card" *ngFor="let reservation of filteredReservations">
       <mat-card-header>
-        <mat-card-title>Rezerwacja</mat-card-title>
-        <mat-card-subtitle>{{reservation.dateStart | date: 'short'}}</mat-card-subtitle>
-        <mat-card-subtitle>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-subtitle>
+        <mat-card-title>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-title>
+        <mat-card-subtitle>{{reservation.dateStart | date: 'short'}}</mat-card-subtitle>      
+        <mat-card-subtitle>Miejsca: {{reservation.restaurant.id}}</mat-card-subtitle>               
+        <mat-card-subtitle>Miejsca: {{reservation.customer.login}}</mat-card-subtitle>                                                                            
       </mat-card-header>
       <mat-card-content>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary">Potwierdź</button>
-        <button mat-raised-button color="accent">Edytuj</button>
-        <button mat-raised-button color="disabled">Anuluj</button>
+        <button mat-raised-button color="primary" (click)="onConfirm(reservation.id)">Potwierdź</button>
+        <button mat-raised-button color="warn" >Edytuj</button>
+        <button mat-raised-button color="disabled" (click)="openDialog(reservation.id)">Anuluj</button>
       </mat-card-actions>
     </mat-card>
   </div>
