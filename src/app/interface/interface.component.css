@@ -40,16 +40,6 @@
   margin-right: 64px;
 }
 
-.loading-spinner {
-
-}
-
-@media screen and (min-width: 600px) {
-  .test {
-    margin-top: 64px;
-  }
-}
-
 .test {
   margin-top: 64px;
 }

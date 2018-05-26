@@ -13,8 +13,6 @@ import { DataHandlerService } from '../services/data-handler.service';
 })
 export class InterfaceComponent implements OnInit {
   employee: Employee;
-  xd1: boolean = true;
-  xd2: boolean = false;
 
   constructor(private _dataHandler: DataHandlerService, private _authService: AuthService, private _router: Router) {
   }

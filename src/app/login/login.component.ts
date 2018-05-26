@@ -29,14 +29,15 @@ export class LoginComponent implements OnInit{
     this._authService.login(this.model.login, this.model.password)
       .subscribe(
                 data => {
-                    console.log("DATA");
+                    console.log("LOGIN SUCCESSFUL");
                     localStorage.setItem("login", this.model.login);
                     this._dataHandler.setEmployee(this.model.login);
                     this.router.navigate(["interface"], { replaceUrl: true });
                 },
                 error => {
                     this.loading = false;
-                    console.log("ERROR");
+                    console.log("LOGIN FAILED");
+                    console.log(error);
                 });
   }
 }
