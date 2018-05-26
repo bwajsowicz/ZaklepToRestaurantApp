@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { Reservation } from '../../models/reservation';
 import { ReservationService } from '../../services/reservation.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialog } from '../shared/dialogs/confirm-dialog.component';
+import { UpdateDialog } from '../shared/dialogs/update-dialog.component';
 
 @Component({
   selector: 'app-reservations',
@@ -23,7 +26,7 @@ export class ReservationsComponent {
   isLoading: boolean = true;
   isEmpty: boolean = false;
 
-  constructor(private _reservationService: ReservationService, private _employeeService : EmployeeService, private _authService: AuthService, private _router: Router) {
+  constructor(private _reservationService: ReservationService, private _employeeService : EmployeeService, private _authService: AuthService, private _router: Router,  public dialog: MatDialog) {
     this.actualDate = new Date();
     this.employee = new Employee();
     _employeeService.getSingleEmployee(localStorage.getItem("login"))
@@ -62,5 +65,32 @@ export class ReservationsComponent {
     this.actualDate = event.value;
 
     this.updateReservations();
+  }
+
+  openRemoveDialog(reservationId: string): void {
+    let dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '250px',
+      data: {id: reservationId}
+    });
+ 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Reservation has been deleted');
+      this.updateReservations();
+    });
+  }
+
+  openUpdateDialog(reservation: Reservation): void {
+    let dialogRef = this.dialog.open(UpdateDialog, {
+      width: '250px',
+      data: {
+        customer: reservation.customer.firstName,
+        date: reservation.dateStart,
+        numberOfSeats: 1
+      }
+    });
+ 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Reservation with id: ' + reservation.id + 'has been updated');
+    });
   }
 }

@@ -5,25 +5,29 @@
      <input style="text-align: center;" matInput value="example" [(ngModel)]="filter">
   </mat-form-field>
 </div>
-  <div class="d-flex flex-wrap justify-content-center">
-    <mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
-    <h1 class="mat-display-1 notification" *ngIf="isEmpty">brak nowych rezerwacji</h1>
-    <mat-card class="card" *ngFor="let reservation of filteredReservations">
-      <mat-card-header>
-        <mat-card-title>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-title>
-        <mat-card-subtitle>{{reservation.dateStart | date: 'short'}}</mat-card-subtitle>      
-        <mat-card-subtitle>Miejsca: {{reservation.restaurant.id}}</mat-card-subtitle>               
-        <mat-card-subtitle>Miejsca: {{reservation.customer.login}}</mat-card-subtitle>                                                                            
-      </mat-card-header>
-      <mat-card-content>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="onConfirm(reservation.id)">Potwierdź</button>
-        <button mat-raised-button color="warn" >Edytuj</button>
-        <button mat-raised-button color="disabled" (click)="openDialog(reservation.id)">Anuluj</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-  <br/>
-  <mat-divider></mat-divider>
-  <br/>
+<div class="d-flex flex-wrap justify-content-center">
+  <mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
+  <h1 class="mat-display-1 notification" *ngIf="isEmpty">brak nowych rezerwacji</h1>
+  <mat-card class="card" *ngFor="let reservation of filteredReservations">
+    <mat-card-header>
+        <div class="d-flex justify-content-between align-items-center" style="width: 100%">
+            <div style="margin-left: -16px">
+                <mat-card-title>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-title>
+                <mat-card-subtitle>{{reservation.dateStart | date: 'short'}}</mat-card-subtitle>
+                <mat-card-subtitle>Miejsca: 1</mat-card-subtitle>    
+            </div>
+            <div mat-card-avatar class="example-header-image" ></div>      
+        </div>                                                                                 
+    </mat-card-header>
+    <mat-card-content>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onConfirm(reservation.id)">Potwierdź</button>
+      <button mat-raised-button color="warn" (click)="openUpdateDialog(reservation)">Edytuj</button>
+      <button mat-raised-button color="disabled" (click)="openRemoveDialog(reservation.id)">Anuluj</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<br/>
+<mat-divider></mat-divider>
+<br/>

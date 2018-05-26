@@ -13,5 +13,6 @@
 }
 
 .notification {
-  margin: 0;
+  margin : 16px;
+  text-align: center;
 }

@@ -10,13 +10,16 @@ import { Reservation } from '../../models/reservation';
 import { ReservationService } from '../../services/reservation.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { interval } from 'rxjs';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBar } from '@angular/material';
+import { ConfirmDialog } from '../shared/dialogs/confirm-dialog.component';
+import { ConfirmSnack } from '../shared/snacks/confirm-snack.component';
+import { UpdateDialog } from '../shared/dialogs/update-dialog.component';
 
 
 @Component({
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  providers: [EmployeeService, AuthService, ReservationService]
+  providers: [EmployeeService, AuthService, ReservationService, MatSnackBar]
 })
 export class DashboardComponent implements OnInit {
   employee: Employee;
@@ -47,7 +50,7 @@ export class DashboardComponent implements OnInit {
     return this.reservations.filter(x => (x.customer.firstName.toLocaleLowerCase() + "" + x.customer.lastName.toLocaleLowerCase()).indexOf(value) !== -1);
   }
 
-  constructor(public dialog: MatDialog, private _reservationService: ReservationService, private _employeeService : EmployeeService, private _authService: AuthService, private _router: Router) {
+  constructor(public snackBar: MatSnackBar, public dialog: MatDialog, private _reservationService: ReservationService, private _employeeService : EmployeeService, private _authService: AuthService, private _router: Router) {
     this.filter = '';
     this.actualDate = new Date();
     this.employee = new Employee(); 
@@ -80,13 +83,13 @@ export class DashboardComponent implements OnInit {
           this.isEmpty = false;
         }
 
-        var numOfReservationsBuffer = this.numberOfReservations
+        /*var numOfReservationsBuffer = this.numberOfReservations
         this.numberOfReservations = reservations.length;
 
         if(numOfReservationsBuffer != this.numberOfReservations)
         {
           console.log("NIE ZGADZAJĄ SIĘ");
-        }
+        }*/
         
         for(let reservation of reservations) 
         {
@@ -101,50 +104,43 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  onConfirm(id: string) {
-    //TODO: 'are you sure?' dialog
-    this._reservationService.confirmReservation(id).subscribe(result => console.log(result));
+  onConfirm(reservationId: string) {
+    this._reservationService.confirmReservation(reservationId)
+      .subscribe();
+    //setTimeout(() => {this.openConfirmSnackBar()}, 1050);
+    this.openConfirmSnackBar();
+    console.log('Reservation with id: ' + reservationId + 'has been confirmed');
   }
 
-  onEdit() {
-    //TODO: implement dialog-box for this method
-  }
-
-  openDialog(reservationId: string): void {
-
-
+  openRemoveDialog(reservationId: string): void {
     let dialogRef = this.dialog.open(ConfirmDialog, {
       width: '250px',
       data: {id: reservationId}
     });
  
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Reservation has been deleted');
+      console.log('Reservation with id: ' + reservationId + 'has been deleted');
     });
   }
-}
 
-// --dialogs--
-
-// confirm
-@Component({
-  selector: 'confirm-dialog',
-  templateUrl: 'confirm-dialog.html',
-  providers: [ReservationService]
-})
-export class ConfirmDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private _reservationService: ReservationService) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
+  openUpdateDialog(reservation: Reservation): void {
+    let dialogRef = this.dialog.open(UpdateDialog, {
+      width: '250px',
+      data: {
+        customer: reservation.customer.firstName,
+        date: reservation.dateStart,
+        numberOfSeats: 1
+      }
+    });
+ 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Reservation with id: ' + reservation.id + 'has been updated');
+    });
   }
 
-  onYesClick(): void {
-    console.log(this.data.id);
-    this._reservationService.deleteReservation(this.data.id).subscribe(result => console.log(result));
-    this.dialogRef.close();
+  openConfirmSnackBar() {
+    this.snackBar.openFromComponent(ConfirmSnack, {
+      duration: 1000,
+    });
   }
 }
