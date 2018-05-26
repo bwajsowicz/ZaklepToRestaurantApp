@@ -19,7 +19,7 @@ export class ReservationService {
 
     getAllUnconfirmedReservationsForSpecificRestaurant(restaurantId: string) {
         //return interval(1000).pipe(switchMap(() => this.http.get<Reservation[]>("http://localhost:53993/api/reservations/specific-restaurant/" + restaurantId)));
-        return interval(1000).pipe(switchMap(() => this.http.get<Reservation[]>("http://zakleptoapi.azurewebsites.net/api/reservations/specific-restaurant/" + restaurantId)));        
+        return interval(1000).pipe(switchMap(() => this.http.get<Reservation[]>("https://zakleptoapi.azurewebsites.net/api/reservations/specific-restaurant/" + restaurantId)));        
     }
  
     getSingleReservation(id: string) {
