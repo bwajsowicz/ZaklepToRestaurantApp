@@ -13,7 +13,7 @@ export class ReservationService {
  
     getAllReservationsForSpecificRestaurantAndDate(restaurantId: string, date: string) {
         //return this.http.get<Reservation[]>('http://localhost:53993/api/reservations/' + restaurantId + "/" + date);
-        return this.http.get<Reservation[]>('http://zakleptoapi.azurewebsites.net/api/reservations/' + restaurantId + "/" + date);
+        return this.http.get<Reservation[]>('https://zakleptoapi.azurewebsites.net/api/reservations/' + restaurantId + "/" + date);
         
     }
 
@@ -24,14 +24,14 @@ export class ReservationService {
  
     getSingleReservation(id: string) {
         //return this.http.get<Reservation>('http://localhost:53993/api/reservations/' + id);
-        return this.http.get<Reservation>('http://zakleptoapi.azurewebsites.net/api/reservations/' + id);        
+        return this.http.get<Reservation>('https://zakleptoapi.azurewebsites.net/api/reservations/' + id);        
     }
 
     confirmReservation(id: string) {
-        return this.http.post('http://zakleptoapi.azurewebsites.net/api/reservations/' + id + '/activate', null);
+        return this.http.post('https://zakleptoapi.azurewebsites.net/api/reservations/' + id + '/activate', null);
     }
 
     deleteReservation(id: string) {
-        return this.http.delete('http://zakleptoapi.azurewebsites.net/api/reservations/' + id + '/remove');
+        return this.http.delete('https://zakleptoapi.azurewebsites.net/api/reservations/' + id + '/remove');
     }
 }

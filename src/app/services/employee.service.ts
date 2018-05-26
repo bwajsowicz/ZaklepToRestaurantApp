@@ -10,12 +10,12 @@ export class EmployeeService {
  
     getAllEmployees() {   
         //return this.http.get<Employee[]>('http://localhost:53993/api/employee');
-        return this.http.get<Employee[]>('http://zakleptoapi.azurewebsites.net/api/employee');
+        return this.http.get<Employee[]>('https://zakleptoapi.azurewebsites.net/api/employee');
         
     }
  
     getSingleEmployee(login: string) {
         //return this.http.get<Employee>('http://localhost:53993/api/employee/' + login);
-        return this.http.get<Employee>('http://zakleptoapi.azurewebsites.net/api/employee/' + login);        
+        return this.http.get<Employee>('https://zakleptoapi.azurewebsites.net/api/employee/' + login);        
     }
 }
