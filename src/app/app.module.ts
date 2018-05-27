@@ -36,6 +36,7 @@ import { ConfirmDialog } from './interface/shared/dialogs/confirm-dialog.compone
 import { UpdateDialog } from './interface/shared/dialogs/update-dialog.component';
 import { ConfirmSnack } from './interface/shared/snacks/confirm-snack.component';
 import { RemoveSnack } from './interface/shared/snacks/remove-snack.component';
+import { UpdateSnack } from './interface/shared/snacks/update-snack.components';
 
 @NgModule({
   declarations: [
@@ -48,9 +49,10 @@ import { RemoveSnack } from './interface/shared/snacks/remove-snack.component';
     ConfirmDialog,
     UpdateDialog,
     ConfirmSnack,
-    RemoveSnack
+    RemoveSnack,
+    UpdateSnack
   ],
-  entryComponents: [ConfirmDialog, UpdateDialog, ConfirmSnack, RemoveSnack],
+  entryComponents: [ConfirmDialog, UpdateDialog, ConfirmSnack, RemoveSnack, UpdateSnack],
   imports: [
     HttpClientModule,
     FormsModule, ReactiveFormsModule,
