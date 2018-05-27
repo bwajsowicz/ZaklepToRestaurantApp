@@ -38,6 +38,7 @@ import { ConfirmSnack } from './interface/shared/snacks/confirm-snack.component'
 import { RemoveSnack } from './interface/shared/snacks/remove-snack.component';
 import { UpdateSnack } from './interface/shared/snacks/update-snack.components';
 import { TableViewComponent } from './interface/table-view/table-view.component';
+import { EmployeesComponent } from './interface/employees/employees.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { TableViewComponent } from './interface/table-view/table-view.component'
     ConfirmSnack,
     RemoveSnack,
     UpdateSnack,
-    TableViewComponent
+    TableViewComponent,
+    EmployeesComponent
   ],
   entryComponents: [ConfirmDialog, UpdateDialog, ConfirmSnack, RemoveSnack, UpdateSnack],
   imports: [
@@ -70,8 +72,12 @@ import { TableViewComponent } from './interface/table-view/table-view.component'
           component: ReservationsComponent,
         },
         {
-          path: 'tables',
+          path: 'table-view',
           component: TableViewComponent,
+        },
+        {
+          path: 'employees',
+          component: EmployeesComponent,
         },
         {
           path: 'account',
