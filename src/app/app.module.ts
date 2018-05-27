@@ -37,6 +37,7 @@ import { UpdateDialog } from './interface/shared/dialogs/update-dialog.component
 import { ConfirmSnack } from './interface/shared/snacks/confirm-snack.component';
 import { RemoveSnack } from './interface/shared/snacks/remove-snack.component';
 import { UpdateSnack } from './interface/shared/snacks/update-snack.components';
+import { TableViewComponent } from './interface/table-view/table-view.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { UpdateSnack } from './interface/shared/snacks/update-snack.components';
     UpdateDialog,
     ConfirmSnack,
     RemoveSnack,
-    UpdateSnack
+    UpdateSnack,
+    TableViewComponent
   ],
   entryComponents: [ConfirmDialog, UpdateDialog, ConfirmSnack, RemoveSnack, UpdateSnack],
   imports: [
@@ -69,7 +71,7 @@ import { UpdateSnack } from './interface/shared/snacks/update-snack.components';
         },
         {
           path: 'tables',
-          component: ReservationsComponent,
+          component: TableViewComponent,
         },
         {
           path: 'account',
