@@ -1,25 +1,42 @@
-<div class="container-fluid" style="max-width: 500px; text-align: center">
+<div class="d-flex align-items-center flex-column">
   <h1 class="mat-display-1 header-title">Informacje o koncie</h1>
   <mat-card class="card">
-    <mat-form-field class=full-width>
+    <mat-form-field class="full-width">
       <input matInput placeholder="Login" [value]="employee.login" [disabled]="isInputDisabled">
     </mat-form-field>
-    <mat-form-field class=full-width>
+    <mat-form-field class="full-width">
       <input matInput placeholder="Imie" [value]="employee.firstName" [disabled]="isInputDisabled">
     </mat-form-field>
-    <mat-form-field class=full-width>
+    <mat-form-field class="full-width">
       <input matInput placeholder="Nazwisko" [value]="employee.lastName" [disabled]="isInputDisabled">
     </mat-form-field>
-    <mat-form-field class=full-width>
+    <mat-form-field class="full-width">
       <input matInput placeholder="Adres e-mail" [value]="employee.email" [disabled]="isInputDisabled">
     </mat-form-field>
-    <mat-form-field class=full-width>
+    <mat-form-field class="full-width">
       <input matInput placeholder="Numer telefonu" [value]="employee.phone" [disabled]="isInputDisabled">
     </mat-form-field>
     <button class="action-button" color="primary" [disabled]="isConfirmButtonDisabled" (click)="onConfirm()" mat-raised-button>Zapisz</button>
     <button class="action-button" color="accent" [disabled]="isEditButtonDisabled" (click)="onEdit()" mat-raised-button>Edytuj</button>
   </mat-card>
+</div>
+<br/>
+<mat-divider></mat-divider>
+<div class="d-flex align-items-center flex-column">
   <h1 class="mat-display-1 header-title">Zmiana hasła</h1>
-  <mat-card class="account-info-card">
+  <mat-card class="card">
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Stare hasło"/>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Nowe hasło"/>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Potwierdź nowe hasło"/>
+    </mat-form-field>
+    <button class="action-button" color="accent" mat-raised-button>Potwierdź</button>  
   </mat-card>
 </div>
+<br/>
+<mat-divider></mat-divider>
+<br/>

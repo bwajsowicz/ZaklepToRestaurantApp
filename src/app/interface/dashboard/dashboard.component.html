@@ -5,6 +5,8 @@
      <input style="text-align: center;" matInput value="example" [(ngModel)]="filter">
   </mat-form-field>
 </div>
+<mat-divider></mat-divider>
+<br/>
 <div class="d-flex flex-wrap justify-content-center">
   <mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
   <h1 class="mat-display-1 notification" *ngIf="isEmpty">brak nowych rezerwacji</h1>

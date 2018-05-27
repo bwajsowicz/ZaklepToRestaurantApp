@@ -6,6 +6,8 @@
     <mat-datepicker touchUi="true" #picker></mat-datepicker>      
   </mat-form-field>
 </div>
+<mat-divider></mat-divider>
+<br/>
 <div class="d-flex flex-wrap justify-content-center">
   <h1 class="mat-display-1 notification" *ngIf="isEmpty">brak rezerwacji na podanę datę</h1>
   <mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>

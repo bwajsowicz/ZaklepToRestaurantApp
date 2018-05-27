@@ -127,7 +127,7 @@ export class DashboardComponent implements OnInit {
     let dialogRef = this.dialog.open(UpdateDialog, {
       width: '250px',
       data: {
-        customer: reservation.customer.firstName,
+        customer: reservation.customer.firstName + " " + reservation.customer.lastName,
         date: reservation.dateStart,
         numberOfSeats: 1
       }
