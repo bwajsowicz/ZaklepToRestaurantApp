@@ -107,6 +107,15 @@ export class DashboardComponent implements OnInit {
   onConfirm(reservationId: string) {
     this._reservationService.confirmReservation(reservationId)
       .subscribe();
+
+    if(this.filter != "") {
+      for(let reservation of this.filteredReservations) {
+        if(reservation.id == reservationId) {
+          this.filteredReservations.splice(this.filteredReservations.indexOf(reservation), 1);
+        }
+      }
+    }
+    
     //setTimeout(() => {this.openConfirmSnackBar()}, 1050);
     this.openConfirmSnackBar();
     console.log('Reservation with id: ' + reservationId + 'has been confirmed');
@@ -119,6 +128,13 @@ export class DashboardComponent implements OnInit {
     });
  
     dialogRef.afterClosed().subscribe(result => {
+      if(this.filter != "") {
+        for(let reservation of this.filteredReservations) {
+          if(reservation.id == reservationId) {
+            this.filteredReservations.splice(this.filteredReservations.indexOf(reservation), 1);
+          }
+        }
+      }
       console.log('Reservation with id: ' + reservationId + 'has been deleted');
     });
   }
