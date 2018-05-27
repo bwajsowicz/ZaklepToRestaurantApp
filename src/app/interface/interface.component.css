@@ -40,7 +40,14 @@
   margin-right: 64px;
 }
 
-.test {
-  margin-top: 64px;
-}
+@media only screen and (max-width: 600px) {
+  .test {
+    margin-top: 54px;
+  }
+} 
 
+@media only screen and (min-width: 600px) {
+  .test {
+    margin-top: 64px;
+  }  
+}
