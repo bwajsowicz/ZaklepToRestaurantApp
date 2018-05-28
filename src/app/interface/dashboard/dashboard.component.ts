@@ -14,6 +14,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBar } from '@angular/
 import { ConfirmDialog } from '../shared/dialogs/confirm-dialog.component';
 import { ConfirmSnack } from '../shared/snacks/confirm-snack.component';
 import { UpdateDialog } from '../shared/dialogs/update-dialog.component';
+import { HostListener } from '@angular/core';
 
 
 @Component({
@@ -45,6 +46,12 @@ export class DashboardComponent implements OnInit {
     this.filteredReservations = this.filter ? this.PerformFilter(this.filter) : this.reservations;
   }
 
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    if(event.key == '`') 
+      this.updateReservations();
+  }
+  
   PerformFilter(value: string): Reservation[] {
     value = value.toLocaleLowerCase();
     return this.reservations.filter(x => (x.customer.firstName.toLocaleLowerCase() + "" + x.customer.lastName.toLocaleLowerCase()).indexOf(value) !== -1);
@@ -57,68 +64,51 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this._employeeService.getSingleEmployee(localStorage.getItem("login"))
       .subscribe(x => {
                       this.employee = x;
                       this.restaurantId = this.employee.restaurant.id;
-                      console.log(this.restaurantId);
                       this.updateReservations();
       });
   }
 
   updateReservations() {
     this.isEmpty = false;
+    this.isLoading = true;
     this._reservationService.getAllUnconfirmedReservationsForSpecificRestaurant(this.restaurantId)
       .subscribe(reservations => {
-        this.reservations = reservations;
+        this.filteredReservations = reservations;
 
-        if(this.filter == "") {
-          this.filteredReservations = this.reservations;
-        }
-
-        if(this.filteredReservations.length == 0) {
-          this.isEmpty = true;
-        }
-        else {
-          this.isEmpty = false;
-        }
-
-        /*var numOfReservationsBuffer = this.numberOfReservations
-        this.numberOfReservations = reservations.length;
-
-        if(numOfReservationsBuffer != this.numberOfReservations)
-        {
-          console.log("NIE ZGADZAJĄ SIĘ");
-        }*/
-        
         for(let reservation of reservations) 
         {
           let dateString = reservation.dateStart.toString();
           reservation.dateStart = new Date(dateString);
         }
 
-        if(this.reservations.length == 0)
+        if(this.filteredReservations.length == 0) {
           this.isEmpty = true;
+        }
 
         this.isLoading = false;
       });
   }
 
   onConfirm(reservationId: string) {
-    this._reservationService.confirmReservation(reservationId)
-      .subscribe();
-
-    if(this.filter != "") {
-      for(let reservation of this.filteredReservations) {
-        if(reservation.id == reservationId) {
-          this.filteredReservations.splice(this.filteredReservations.indexOf(reservation), 1);
-        }
-      }
+    for(let reservation of this.filteredReservations) {
+      if(reservation.id == reservationId)
+        this.filteredReservations.splice(this.filteredReservations.indexOf(reservation), 1);
     }
-    
-    //setTimeout(() => {this.openConfirmSnackBar()}, 1050);
+
     this.openConfirmSnackBar();
-    console.log('Reservation with id: ' + reservationId + 'has been confirmed');
+
+    if(this.filteredReservations.length == 0)
+      this.isEmpty = true;
+
+    this._reservationService.confirmReservation(reservationId)
+      .subscribe(() => {
+        console.log('Reservation with id: ' + reservationId + 'has been confirmed');
+      }); 
   }
 
   openRemoveDialog(reservationId: string): void {
@@ -128,14 +118,21 @@ export class DashboardComponent implements OnInit {
     });
  
     dialogRef.afterClosed().subscribe(result => {
-      if(this.filter != "") {
-        for(let reservation of this.filteredReservations) {
-          if(reservation.id == reservationId) {
-            this.filteredReservations.splice(this.filteredReservations.indexOf(reservation), 1);
+        if(result == true)  {
+          for(let reservation of this.filteredReservations) {
+            if(reservation.id == reservationId)
+              this.filteredReservations.splice(this.filteredReservations.indexOf(reservation), 1);
           }
-        }
+
+           if(this.filteredReservations.length == 0)
+      this.isEmpty = true;
+
+
+        this.openConfirmSnackBar();
+        this._reservationService.deleteReservation(reservationId).subscribe(result => {
+          console.log('Reservation with id: ' + reservationId + 'has been deleted');
+        })
       }
-      console.log('Reservation with id: ' + reservationId + 'has been deleted');
     });
   }
 

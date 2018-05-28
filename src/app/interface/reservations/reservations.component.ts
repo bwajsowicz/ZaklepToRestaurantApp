@@ -6,9 +6,10 @@ import { Router } from '@angular/router';
 import { Reservation } from '../../models/reservation';
 import { ReservationService } from '../../services/reservation.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ConfirmDialog } from '../shared/dialogs/confirm-dialog.component';
 import { UpdateDialog } from '../shared/dialogs/update-dialog.component';
+import { RemoveSnack } from '../shared/snacks/remove-snack.component';
 
 @Component({
   selector: 'app-reservations',
@@ -26,7 +27,7 @@ export class ReservationsComponent {
   isLoading: boolean = true;
   isEmpty: boolean = false;
 
-  constructor(private _reservationService: ReservationService, private _employeeService : EmployeeService, private _authService: AuthService, private _router: Router,  public dialog: MatDialog) {
+  constructor(private _reservationService: ReservationService, private _employeeService : EmployeeService, private _authService: AuthService, private _router: Router,  public dialog: MatDialog, public snackBar: MatSnackBar) {
     this.actualDate = new Date();
     this.employee = new Employee();
     _employeeService.getSingleEmployee(localStorage.getItem("login"))
@@ -43,13 +44,13 @@ export class ReservationsComponent {
 
     this._reservationService.getAllReservationsForSpecificRestaurantAndDate(this.restaurantId, this.actualDate.toJSON())
       .subscribe(reservations => {
-        this.reservations = reservations.filter(x => x.restaurant.id === this.restaurantId);
+        console.log(this.actualDate);
+        this.reservations = reservations;
         
         for(let reservation of reservations) 
         {
           let dateString = reservation.dateStart.toString();
           reservation.dateStart = new Date(dateString);
-          console.log(reservation.dateStart.toJSON());
         }
 
         if(this.reservations.length == 0)
@@ -64,7 +65,14 @@ export class ReservationsComponent {
     this.isLoading = true;
     this.actualDate = event.value;
 
-    this.updateReservations();
+    if(this.actualDate != null) {
+      this.actualDate.setHours(10);
+      this.updateReservations();
+    }
+    else {
+      this.isEmpty = true;
+      this.isLoading = false;
+    }
   }
 
   openRemoveDialog(reservationId: string): void {
@@ -74,8 +82,16 @@ export class ReservationsComponent {
     });
  
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Reservation has been deleted');
-      this.updateReservations();
+      if(result == true) {
+        for(let reservation of this.reservations) {
+          if(reservation.id == reservationId) 
+          {
+            this.reservations.splice(this.reservations.indexOf(reservation), 1);
+          }
+        }
+        this.openRemoveSnackBar();
+        this._reservationService.deleteReservation(reservationId).subscribe();
+      }
     });
   }
 
@@ -91,6 +107,12 @@ export class ReservationsComponent {
  
     dialogRef.afterClosed().subscribe(result => {
       console.log('Reservation with id: ' + reservation.id + 'has been updated');
+    });
+  }
+
+  openRemoveSnackBar() {
+    this.snackBar.openFromComponent(RemoveSnack, {
+      duration: 1000,
     });
   }
 }

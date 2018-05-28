@@ -12,21 +12,9 @@ import { RemoveSnack } from "../snacks/remove-snack.component";
 export class ConfirmDialog {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private _reservationService: ReservationService, public snackBar: MatSnackBar) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { } 
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onYesClick(): void {
-    this._reservationService.deleteReservation(this.data.id).subscribe(result => console.log(result));
-    this.dialogRef.close();
-    this.openRemoveSnackBar();
-  }
-  
-  openRemoveSnackBar() {
-    this.snackBar.openFromComponent(RemoveSnack, {
-      duration: 1000,
-    });
-  }
+    onNoClick() {
+      this.dialogRef.close();
+    }
 }

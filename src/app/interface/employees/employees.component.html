@@ -1,0 +1,11 @@
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <h1 class="mat-display-1 header-title">Pracownicy</h1>
+</div>
+<mat-divider>
+</mat-divider>
+<br/>
+<div class="d-flex flex-wrap justify-content-center">
+    <mat-card class="card" *ngFor="let employee of employees">
+        {{employee.firstName}}
+    </mat-card>
+</div>

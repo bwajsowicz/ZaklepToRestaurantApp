@@ -14,12 +14,11 @@ export class ReservationService {
     getAllReservationsForSpecificRestaurantAndDate(restaurantId: string, date: string) {
         //return this.http.get<Reservation[]>('http://localhost:53993/api/reservations/' + restaurantId + "/" + date);
         return this.http.get<Reservation[]>('https://zakleptoapi.azurewebsites.net/api/reservations/' + restaurantId + "/" + date);
-        
     }
 
     getAllUnconfirmedReservationsForSpecificRestaurant(restaurantId: string) {
         //return interval(1000).pipe(switchMap(() => this.http.get<Reservation[]>("http://localhost:53993/api/reservations/specific-restaurant/" + restaurantId)));
-        return interval(1000).pipe(switchMap(() => this.http.get<Reservation[]>("https://zakleptoapi.azurewebsites.net/api/reservations/specific-restaurant/" + restaurantId)));        
+        return this.http.get<Reservation[]>("https://zakleptoapi.azurewebsites.net/api/reservations/specific-restaurant/" + restaurantId);        
     }
  
     getSingleReservation(id: string) {
