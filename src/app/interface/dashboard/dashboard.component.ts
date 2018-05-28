@@ -76,6 +76,7 @@ export class DashboardComponent implements OnInit {
   updateReservations() {
     this.isEmpty = false;
     this.isLoading = true;
+    this.filteredReservations = [];
     this._reservationService.getAllUnconfirmedReservationsForSpecificRestaurant(this.restaurantId)
       .subscribe(reservations => {
         this.filteredReservations = reservations;
