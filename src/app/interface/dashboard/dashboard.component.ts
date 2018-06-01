@@ -122,11 +122,14 @@ export class DashboardComponent implements OnInit {
       if(reservation.id == reservationId)
         this.reservations.splice(this.reservations.indexOf(reservation), 1);
     }
-    
+
     this.openConfirmSnackBar();
 
     if(this.filteredReservations.length == 0)
+    {
       this.isEmpty = true;
+      this.filter = "";
+    }
 
     this._reservationService.confirmReservation(reservationId)
       .subscribe(() => {
@@ -152,8 +155,10 @@ export class DashboardComponent implements OnInit {
               this.reservations.splice(this.reservations.indexOf(reservation), 1);
           }
 
-           if(this.filteredReservations.length == 0)
-      this.isEmpty = true;
+           if(this.filteredReservations.length == 0) {
+             this.isEmpty = true;
+             this.filter = "";
+           }
 
 
         this.openRemoveSnackBar();
