@@ -39,6 +39,7 @@ import { RemoveSnack } from './interface/shared/snacks/remove-snack.component';
 import { UpdateSnack } from './interface/shared/snacks/update-snack.components';
 import { TableViewComponent } from './interface/table-view/table-view.component';
 import { EmployeesComponent } from './interface/employees/employees.component';
+import { AmazingTimePickerModule } from 'amazing-time-picker'; 
 
 @NgModule({
   declarations: [
@@ -92,7 +93,7 @@ import { EmployeesComponent } from './interface/employees/employees.component';
      MatInputModule, MatButtonModule, MatBadgeModule, MatToolbarModule, 
      MatFormFieldModule, MatDatepickerModule, MatSnackBarModule,
      MatDialogModule],
-    BrowserModule,
+    BrowserModule
   ],
   providers: [DataHandlerService, AuthGuard, EmployeeService],
   bootstrap: [AppComponent]

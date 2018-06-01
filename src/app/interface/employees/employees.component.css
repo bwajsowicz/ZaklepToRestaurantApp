@@ -6,4 +6,12 @@
 
 .card {
     margin: 1%;
+    min-width: 305px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+  height: 64px;
+  width: 64px;
 }

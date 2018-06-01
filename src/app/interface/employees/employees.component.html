@@ -5,7 +5,20 @@
 </mat-divider>
 <br/>
 <div class="d-flex flex-wrap justify-content-center">
+    <mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
     <mat-card class="card" *ngFor="let employee of employees">
-        {{employee.firstName}}
+        <div class='d-flex justify-content-between'>
+            <div mat-card-avatar class="example-header-image" ></div>    
+            <span style="width: 24px"></span>
+            <div class="d-flex align-items-center">
+                <div>
+                    <p class="mat-body-1" style="margin-bottom: 0">{{employee.firstName}} {{employee.lastName}}</p>
+                    <p class="mat-body-2" style="margin-bottom: 0">{{employee.email}}</p>
+                </div>
+            </div>
+        </div>
     </mat-card>
 </div>
+<br/>
+<mat-divider></mat-divider>
+<br/>

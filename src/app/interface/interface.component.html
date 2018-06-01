@@ -2,7 +2,7 @@
     <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon style="color: white">menu</mat-icon>
     </button>
-    <h1 class="mat-display-1 header-title">{{employee.restaurant.name}}</h1>
+    <h1 class="mat-display-1 header-title" @fade>{{employee.restaurant.name}}</h1>
     <span class="spacer"></span>
     <button mat-raised-button color="accent"  (click)="logout()">Wyloguj</button>
   </mat-toolbar>

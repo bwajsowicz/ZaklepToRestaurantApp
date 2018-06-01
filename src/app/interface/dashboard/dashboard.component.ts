@@ -15,12 +15,29 @@ import { ConfirmDialog } from '../shared/dialogs/confirm-dialog.component';
 import { ConfirmSnack } from '../shared/snacks/confirm-snack.component';
 import { UpdateDialog } from '../shared/dialogs/update-dialog.component';
 import { HostListener } from '@angular/core';
+import { trigger } from '@angular/animations';
+import { transition } from '@angular/animations';
+import { style, query} from '@angular/animations';
+import { animate } from '@angular/animations';
+import { state } from '@angular/animations';
+import { RemoveSnack } from '../shared/snacks/remove-snack.component';
 
 
 @Component({
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  providers: [EmployeeService, AuthService, ReservationService, MatSnackBar]
+  providers: [EmployeeService, AuthService, ReservationService, MatSnackBar],
+  animations: [
+    trigger("fade", [
+      state("void", style({ opacity: 0})),
+      transition("void => *", [
+        animate(500)
+      ]),
+      transition("* => void", [
+        animate(500)
+      ]),
+    ])
+  ]
 })
 export class DashboardComponent implements OnInit {
   employee: Employee;
@@ -129,7 +146,7 @@ export class DashboardComponent implements OnInit {
       this.isEmpty = true;
 
 
-        this.openConfirmSnackBar();
+        this.openRemoveSnackBar();
         this._reservationService.deleteReservation(reservationId).subscribe(result => {
           console.log('Reservation with id: ' + reservationId + 'has been deleted');
         })
@@ -155,6 +172,12 @@ export class DashboardComponent implements OnInit {
   openConfirmSnackBar() {
     this.snackBar.openFromComponent(ConfirmSnack, {
       duration: 1000,
+    });
+  }
+
+  openRemoveSnackBar() {
+    this.snackBar.openFromComponent(RemoveSnack, {
+      duration: 1000
     });
   }
 }

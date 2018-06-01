@@ -1,15 +1,18 @@
-<div mat-dialog-content style="text-align: center">
-  <mat-form-field style="width: 204px;">
+<div mat-dialog-content style="text-align: center;">
+  <mat-form-field>
     <input matInput placeholder="Klient" [value]="customer">
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field style="width: 180px" >
     <input matInput placeholder="Data rezerwacji" [matDatepicker]="picker" [value]="date" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker touchUi="true" #picker></mat-datepicker>    
   </mat-form-field>
-  <mat-form-field style="width: 204px;">
-    <input matInput placeholder="Liczba miejsc" [value]="numberOfSeats">
+  <mat-form-field>
+    <input matInput placeholder="Godzina" [value]="time">
   </mat-form-field>
+  <!--<mat-form-field style="width: 204px;">
+    <input matInput placeholder="Liczba miejsc" [value]="numberOfSeats">
+  </mat-form-field>-->
 </div>
 <div mat-dialog-actions class="d-flex justify-content-between">
   <button mat-button cdkFocusInitial (click)="onNoClick()">Anuluj</button>

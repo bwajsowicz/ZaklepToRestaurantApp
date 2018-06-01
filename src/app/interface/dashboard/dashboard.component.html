@@ -2,8 +2,9 @@
   <h1 class="mat-display-1 header-title">Nowe niepotwierdzone</h1>
   Filtruj po imieniu i nazwisku
   <mat-form-field>
-     <input [disabled]="isEmpty" style="text-align: center;" matInput value="example" [(ngModel)]="filter">
+     <input [disabled]="isEmpty || isLoading" style="text-align: center;" matInput value="example" [(ngModel)]="filter">
   </mat-form-field>
+  
 </div>
 <mat-divider></mat-divider>
 <br/>

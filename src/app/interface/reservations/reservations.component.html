@@ -13,9 +13,8 @@
   <mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
   <mat-card class="card" *ngFor="let reservation of reservations">
     <mat-card-header>
-      <mat-card-title>Rezerwacja</mat-card-title>
+      <mat-card-title>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-title>
       <mat-card-subtitle>{{reservation.dateStart | date: 'short'}}</mat-card-subtitle>
-      <mat-card-subtitle>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
     </mat-card-content>

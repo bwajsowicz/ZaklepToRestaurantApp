@@ -10,10 +10,16 @@ import { Employee } from '../../models/employee';
 export class EmployeesComponent implements OnInit {
   employees: Employee[];
 
+  isLoading: boolean = false;
+
   constructor(private _employeeService: EmployeeService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this._employeeService.getAllEmployees()
-      .subscribe(data => this.employees = data);
+      .subscribe(data => {
+        this.employees = data;
+        this.isLoading = false;
+      });
   }
 }

@@ -13,6 +13,7 @@ export class UpdateDialog {
   customer: string;
   date: Date;
   numberOfSeats: number;
+  time: string;
 
   constructor(
     public dialogRef: MatDialogRef<UpdateDialog>,
@@ -20,6 +21,22 @@ export class UpdateDialog {
       this.customer = data.customer;
       this.date = data.date;
       this.numberOfSeats = data.numberOfSeats;
+      let hours = this.date.getHours();
+      let minutes = this.date.getMinutes();
+
+      if(hours > 10) {
+        this.time = hours.toString() + ":";
+      }
+      else {
+        this.time = "0" + hours.toString() + ":";
+      }
+
+      if(minutes > 10) {
+        this.time += minutes.toString();
+      }
+      else {
+        this.time += "0" + minutes.toString();
+      }
     }
 
   onNoClick(): void {
