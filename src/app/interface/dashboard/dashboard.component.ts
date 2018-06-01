@@ -96,6 +96,7 @@ export class DashboardComponent implements OnInit {
     this.filteredReservations = [];
     this._reservationService.getAllUnconfirmedReservationsForSpecificRestaurant(this.restaurantId)
       .subscribe(reservations => {
+        this.reservations = reservations;
         this.filteredReservations = reservations;
 
         for(let reservation of reservations) 
@@ -117,7 +118,11 @@ export class DashboardComponent implements OnInit {
       if(reservation.id == reservationId)
         this.filteredReservations.splice(this.filteredReservations.indexOf(reservation), 1);
     }
-
+    for(let reservation of this.reservations) {
+      if(reservation.id == reservationId)
+        this.reservations.splice(this.reservations.indexOf(reservation), 1);
+    }
+    
     this.openConfirmSnackBar();
 
     if(this.filteredReservations.length == 0)
@@ -140,6 +145,11 @@ export class DashboardComponent implements OnInit {
           for(let reservation of this.filteredReservations) {
             if(reservation.id == reservationId)
               this.filteredReservations.splice(this.filteredReservations.indexOf(reservation), 1);
+          }
+
+          for(let reservation of this.reservations) {
+            if(reservation.id == reservationId)
+              this.reservations.splice(this.reservations.indexOf(reservation), 1);
           }
 
            if(this.filteredReservations.length == 0)
