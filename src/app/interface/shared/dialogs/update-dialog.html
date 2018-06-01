@@ -5,7 +5,7 @@
   <mat-form-field style="width: 180px" >
     <input matInput placeholder="Data rezerwacji" [matDatepicker]="picker" [value]="date" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker touchUi="true" #picker></mat-datepicker>    
+    <mat-datepicker touchUi="true" #picker color="accent"></mat-datepicker>    
   </mat-form-field>
   <mat-form-field>
     <input matInput placeholder="Godzina" [value]="time">

@@ -10,7 +10,7 @@
 <br/>
 <div class="d-flex flex-wrap justify-content-center">
   <h1 class="mat-display-1 notification" *ngIf="isEmpty">brak rezerwacji na podanę datę</h1>
-  <mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
+  <mat-spinner class="loading-spinner" *ngIf="isLoading" color="accent"></mat-spinner>
   <mat-card class="card" *ngFor="let reservation of reservations">
     <mat-card-header>
       <mat-card-title>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-title>
