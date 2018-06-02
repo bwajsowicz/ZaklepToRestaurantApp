@@ -3,7 +3,7 @@
   <mat-form-field style="margin: 16px">
     <input style="text-align: center;" matInput [matDatepicker]="picker" [value]="actualDate" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker touchUi="true" #picker></mat-datepicker>      
+    <mat-datepicker touchUi="true" #picker color="accent"></mat-datepicker>      
   </mat-form-field>
 </div>
 <mat-divider></mat-divider>
@@ -13,14 +13,21 @@
   <mat-spinner class="loading-spinner" *ngIf="isLoading" color="accent"></mat-spinner>
   <mat-card class="card" *ngFor="let reservation of reservations">
     <mat-card-header>
-      <mat-card-title>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-title>
-      <mat-card-subtitle>{{reservation.dateStart | date: 'short'}}</mat-card-subtitle>
+        <div class="d-flex justify-content-between align-items-center" style="width: 100%">
+            <div style="margin-left: -16px">
+                <mat-card-title>{{reservation.customer.firstName}} {{reservation.customer.lastName}}</mat-card-title>
+                <mat-card-subtitle>{{reservation.dateStart | date: 'short'}}</mat-card-subtitle>
+                <mat-card-subtitle>{{reservation.customer.phone | phone}}</mat-card-subtitle>    
+            </div>
+            <div mat-card-avatar class="example-header-image" ></div>      
+        </div>                                                                                 
     </mat-card-header>
-    <mat-card-content>
-    </mat-card-content>
+    <mat-divider></mat-divider>
     <mat-card-actions>
-      <button mat-raised-button color="accent" (click)="openUpdateDialog(reservation)" >Edytuj</button>
-      <button mat-raised-button (click)="openRemoveDialog(reservation.id)" >Anuluj</button>
+      <div class="d-flex justify-content-center">
+          <button mat-raised-button color="accent" (click)="openUpdateDialog(reservation)" >Edytuj</button>
+          <button mat-raised-button (click)="openRemoveDialog(reservation.id)" >Anuluj</button>    
+      </div>
     </mat-card-actions>
   </mat-card>
 </div>

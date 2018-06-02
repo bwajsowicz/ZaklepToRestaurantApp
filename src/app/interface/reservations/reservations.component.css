@@ -1,5 +1,6 @@
 .card {
     margin: 1%;
+    min-width: 304.72px;
 }
 
 .header-title {
@@ -15,4 +16,12 @@
 .notification {
   margin : 16px;
   text-align: center;
+}
+
+.example-header-image {
+  background: url('../../../assets/icon.png');
+  background-size: cover;
+  height: 64px;
+  width: 64px;
+  margin-bottom: 16px;
 }

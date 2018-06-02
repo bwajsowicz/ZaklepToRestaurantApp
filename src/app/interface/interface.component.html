@@ -22,7 +22,7 @@
         <a mat-list-item (click)="sidenav.toggle()" routerLink='employees'><mat-icon class="sidenav-list-item-icon" >people</mat-icon>Pracownicy</a>         
         <a mat-list-item (click)="sidenav.toggle()" routerLink='account'><mat-icon class="sidenav-list-item-icon" >account_circle</mat-icon>Konto</a>    
         <mat-divider></mat-divider>
-        <a mat-list-item routerLink="."><mat-icon class="sidenav-list-item-icon" >settings</mat-icon>Ustawienia</a>
+        <a mat-list-item (click)="sidenav.toggle()" routerLink='settings'><mat-icon class="sidenav-list-item-icon" >settings</mat-icon>Ustawienia</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
