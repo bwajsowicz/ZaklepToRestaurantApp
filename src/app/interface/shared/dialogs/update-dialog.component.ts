@@ -24,14 +24,14 @@ export class UpdateDialog {
       let hours = this.date.getHours();
       let minutes = this.date.getMinutes();
 
-      if(hours > 10) {
+      if(hours >= 10) {
         this.time = hours.toString() + ":";
       }
       else {
         this.time = "0" + hours.toString() + ":";
       }
 
-      if(minutes > 10) {
+      if(minutes >= 10) {
         this.time += minutes.toString();
       }
       else {
