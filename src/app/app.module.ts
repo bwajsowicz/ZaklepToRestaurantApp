@@ -39,7 +39,9 @@ import { RemoveSnack } from './interface/shared/snacks/remove-snack.component';
 import { UpdateSnack } from './interface/shared/snacks/update-snack.components';
 import { TableViewComponent } from './interface/table-view/table-view.component';
 import { EmployeesComponent } from './interface/employees/employees.component';
-import { AmazingTimePickerModule } from 'amazing-time-picker'; 
+import { AmazingTimePickerModule } from 'amazing-time-picker';
+import { SettingsComponent } from './interface/settings.component'; 
+import { PhonePipe } from './interface/shared/pipes/phone.pipe';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { AmazingTimePickerModule } from 'amazing-time-picker';
     RemoveSnack,
     UpdateSnack,
     TableViewComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    SettingsComponent,
+    PhonePipe
   ],
   entryComponents: [ConfirmDialog, UpdateDialog, ConfirmSnack, RemoveSnack, UpdateSnack],
   imports: [
@@ -83,6 +87,10 @@ import { AmazingTimePickerModule } from 'amazing-time-picker';
         {
           path: 'account',
           component: AccountComponent,
+        },
+        {
+          path: 'settings',
+          component: SettingsComponent,
         },
         {path: '', redirectTo: 'dashboard', pathMatch: 'full'}  ]},
       {path: '', redirectTo: 'login', pathMatch: 'full'}
